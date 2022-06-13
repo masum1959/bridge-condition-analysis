@@ -7,61 +7,52 @@ Original file is located at
     https://colab.research.google.com/drive/1fNBDXJItEZut1UqxNl380lBCk2ADt1dr
 """
 
+## import necessary packages 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import time
+from sklearn import metrics
 
+
+# read the data
 data = pd.read_csv("ALL21.txt")
 
-data['LOWEST_RATING'].value_counts()
-
-import matplotlib.pyplot as plt
+# Visualization
 data['LOWEST_RATING'].value_counts().sort_values().plot(kind = 'barh')
 plt.title("Frequency Distribution of Bridge Condition")
 plt.show()
 
+# missing value analysis
 percent_missing = data.isnull().sum() / len(data)
 missing_value_df = pd.DataFrame({'column_name': data.columns,
                                  'percent_missing': percent_missing})
 
-missing_value_df.head()
-
 missing_value_df_above_10percent = missing_value_df[missing_value_df['percent_missing'] > 0.3]
-
-missing_value_df_above_10percent
-
 data_drop_feature_with_MV = data.drop(missing_value_df_above_10percent['column_name'], axis = 1)
-
-data_drop_feature_with_MV
-
 data_dropMV = data_drop_feature_with_MV.dropna()
 
-data_dropMV.shape
-
-
-
 data_final = data_dropMV.select_dtypes(exclude= 'object')
-data_final
+print("shape of the preprocessed data", data_final.shape)
 
+#sampling from the data 
 data_final = data_final.sample(n =100000, random_state= 2022)
 
+# categorization of the target variable 
 data_final["LOWEST_RATING"] = np.where(data_final["LOWEST_RATING"] > 5, 0, 1)
 
+#visualization 
 data_final["LOWEST_RATING"].value_counts().plot(kind= 'barh')
 plt.show()
 
-# data_final["LOWEST_RATING"]
 
+# separating X and y variable
 X = data_final.drop("LOWEST_RATING", axis = 1)
 y = data_final["LOWEST_RATING"]
-
-from sklearn.model_selection import train_test_split
+#generating train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, stratify = y)
-
-
-
-from sklearn.ensemble import RandomForestClassifier
-import time
-from sklearn import metrics
 
 start_time = time.time()
 clf = RandomForestClassifier(n_estimators=50)
