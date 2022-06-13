@@ -59,8 +59,15 @@ clf = RandomForestClassifier(n_estimators=50)
 clf.fit(X_train, y_train)
 pred = clf.predict(X_test)
 accuracy = metrics.accuracy_score(y_test, pred)
-print("--- %s seconds ---" % (time.time() - start_time))
+execution_time =  time.time() - start_time)
+print("--- %s seconds ---" % (execution_time)
 print("accuracy of the model: ", accuracy)
+
+# write scores to a file 
+with open("metricsc.txt", 'w') as outfile: 
+    outfile.write("execution_time: %2.1f%%\n" % execution_time)
+    outfile.write("accuracy: %2.1f%%\n" % accuracy)
+      
 
 
 
