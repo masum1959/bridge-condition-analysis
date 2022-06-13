@@ -15,9 +15,9 @@ jobs:
               pip install -r requiremnets.txt 
               python train.py
               
-              echo "## MODEL METRICS" > report.md
-              cat metrics.txt >> report.md
-              cml-send-commnet report.md
+              echo "MODEL METRICS"
+              cat metrics.txt
+#               cml-send-commnet report.md
               
 
 
