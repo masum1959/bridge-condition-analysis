@@ -17,12 +17,8 @@ jobs:
               
               echo "## MODEL METRICS" > report.md
               cat metrics.txt >> report.md
-              
-              
               cml-send-commnet report.md
               
-              
-#               cml-publish 
 
 
               
