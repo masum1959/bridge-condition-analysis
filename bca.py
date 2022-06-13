@@ -10,7 +10,7 @@ Original file is located at
 import numpy as np
 import pandas as pd
 
-data = pd.read_csv("2021HwyBridgesDelimitedAllStates.txt")
+data = pd.read_csv("ALL21.txt")
 
 data['LOWEST_RATING'].value_counts()
 
