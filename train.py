@@ -37,8 +37,6 @@ data_dropMV = data_drop_feature_with_MV.dropna()
 data_final = data_dropMV.select_dtypes(exclude= 'object')
 print("shape of the preprocessed data", data_final.shape)
 
-#sampling from the data 
-data_final = data_final.sample(n =100000, random_state= 2022)
 
 # categorization of the target variable 
 data_final["LOWEST_RATING"] = np.where(data_final["LOWEST_RATING"] > 5, 0, 1)
@@ -59,14 +57,15 @@ clf = RandomForestClassifier(n_estimators=50)
 clf.fit(X_train, y_train)
 pred = clf.predict(X_test)
 accuracy = metrics.accuracy_score(y_test, pred)
-execution_time =  time.time() - start_time)
-print("--- %s seconds ---" % (execution_time)
+execution_time =  (time.time() - start_time)
+print("--- %s seconds ---" % execution_time)
 print("accuracy of the model: ", accuracy)
 
 # write scores to a file 
 with open("metricsc.txt", 'w') as outfile: 
-    outfile.write("execution_time: %2.1f%%\n" % execution_time)
-    outfile.write("accuracy: %2.1f%%\n" % accuracy)
+    outfile.write("execution_time: %2.2f \n" % execution_time)
+    outfile.write("accuracy: %2.2f%%" %accuracy)
+      
       
 
 
